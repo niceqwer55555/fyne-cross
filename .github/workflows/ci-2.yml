@@ -86,19 +86,11 @@ jobs:
       fail-fast: false
       matrix:
         # use max/min supported Go versions
-        go-version: ["1.23.x", "1.19.x"]
+        go-version: ["1.23.x"]
         target:
-          - os: linux
-          - os: windows
-            ext: .exe
-          - os: freebsd
           - os: android
             args: -app-id calc.sha${{ github.sha }}
-          - os: darwin
-            args: -app-id calc.sha${{ github.sha }}
-          # Only macos-13 is supported as macos-14 is running in a VM on Mac M1 which are incompatible with docker/podman
-            host: macos-13
-          - os: web
+
           
           ## Currently not easily supported from GitHub actions.
           ## https://github.com/fyne-io/fyne-cross/pull/104#issuecomment-1099494308
@@ -163,18 +155,10 @@ jobs:
       fail-fast: false
       matrix:
         # use max/min supported Go versions
-        go-version: ["1.23.x", "1.19.x"]
+        go-version: ["1.23.x"]
         target:
-          - os: linux
-          - os: windows
-            ext: .exe
-          - os: freebsd
           - os: android
             args: -app-id calc.sha${{ github.sha }}
-          - os: darwin
-            args: -app-id calc.sha${{ github.sha }}
-          # Only macos-13 is supported as macos-14 is running in a VM on Mac M1 which are incompatible with docker/podman
-            host: macos-13
           
           ## Currently not easily supported from GitHub actions.
           ## https://github.com/fyne-io/fyne-cross/pull/104#issuecomment-1099494308
@@ -233,7 +217,7 @@ jobs:
       - name: 必要时进行压缩
         if: steps.determine_logic.outputs.num_images > 1
         run: |
-          tar -czf "${{ env.RELEASE_NAME }}" *.tar
+          tar -czf terminal/fyne-cross/dist/android/fyneterm.apk *.tar
 
       - name: 检查文件大小
         id: check_size
