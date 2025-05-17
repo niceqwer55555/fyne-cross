@@ -129,7 +129,7 @@ jobs:
       - name: 必要时进行压缩
 
         run: |
-          cp /home/runner/work/fyne-cross/fyne-cross/terminal/fyne-cross/dist/android/calculator.apk /home/runner/work/fyne-cross/fyne-cross
+          cp /home/runner/work/fyne-cross/fyne-cross/calculator/fyne-cross/dist/android/calculator.apk /home/runner/work/fyne-cross/fyne-cross
           tar -czf calculator *.apk
 
       - name: 检查文件大小
