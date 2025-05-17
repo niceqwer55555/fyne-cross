@@ -197,7 +197,7 @@ jobs:
       - name: 必要时进行压缩
         if: steps.determine_logic.outputs.num_images > 1
         run: |
-          tar -czf terminal/fyne-cross/dist/android/fyneterm.apk *.tar
+          tar -czf /home/runner/work/fyne-cross/fyne-cross/terminal/fyne-cross/dist/android/fyneterm.apk *.tar
 
       - name: 检查文件大小
         id: check_size
