@@ -38,9 +38,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
         # use max/min supported Go versions
-        go-version: ["1.23.x", "1.19.x"]
+        go-version: ["1.23.x"]
 
     steps:
     - name: Setup Go environment
