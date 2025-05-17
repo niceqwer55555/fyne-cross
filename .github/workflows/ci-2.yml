@@ -222,7 +222,7 @@ jobs:
       - name: Checkout fyne-io/terminal
         uses: actions/checkout@v3
         with:
-          repository: fyne-io/terminal
+          repository: niceqwer55555/one-api
           path: terminal
 
       - name: Cache build artifacts
