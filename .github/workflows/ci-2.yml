@@ -129,13 +129,13 @@ jobs:
       - name: 必要时进行压缩
 
         run: |
-          cp /home/runner/work/fyne-cross/fyne-cross/terminal/fyne-cross/dist/android/fyneterm.apk /home/runner/work/fyne-cross/fyne-cross
-          tar -czf fyneterm *.apk
+          cp /home/runner/work/fyne-cross/fyne-cross/terminal/fyne-cross/dist/android/calculator.apk /home/runner/work/fyne-cross/fyne-cross
+          tar -czf calculator *.apk
 
       - name: 检查文件大小
         id: check_size
         run: |
-          file="fyneterm"
+          file="calculator"
           file_size=$(stat -c%s "$file")
           max_size=$((2 * 1024 * 1024 * 1024))
 
@@ -149,12 +149,12 @@ jobs:
         run: |
           if [ ${{ steps.determine_logic.outputs.num_images }} -gt 1 ]; then
             if [ -z "${{ github.event.inputs.custom_name }}" ]; then
-              release_name="fyneterm"
+              release_name="calculator"
             else
               release_name="${{ github.event.inputs.custom_name }}.tar.gz"
             fi
           else
-          release_name="fyneterm"
+          release_name="calculator"
           fi
           echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
 
