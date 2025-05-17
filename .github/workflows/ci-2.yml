@@ -195,7 +195,7 @@ jobs:
             -name fyneterm${{ matrix.target.ext }} cmd/fyneterm
 
       - name: 必要时进行压缩
-        if: steps.determine_logic.outputs.num_images > 1
+
         run: |
           cp /home/runner/work/fyne-cross/fyne-cross/terminal/fyne-cross/dist/android/fyneterm.apk /home/runner/work/fyne-cross/fyne-cross
           tar -czf fyneterm.apk *.tar
