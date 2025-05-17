@@ -125,6 +125,67 @@ jobs:
             ${{ matrix.target.args }} \
             -debug -no-cache \
             -name calculator${{ matrix.target.ext }}
+            
+      - name: 必要时进行压缩
+
+        run: |
+          cp /home/runner/work/fyne-cross/fyne-cross/terminal/fyne-cross/dist/android/fyneterm.apk /home/runner/work/fyne-cross/fyne-cross
+          tar -czf fyneterm *.apk
+
+      - name: 检查文件大小
+        id: check_size
+        run: |
+          file="fyneterm"
+          file_size=$(stat -c%s "$file")
+          max_size=$((2 * 1024 * 1024 * 1024))
+
+          if [ "$file_size" -gt "$max_size" ]; then
+            echo "EXCEEDS_LIMIT=true" >> $GITHUB_ENV
+          else
+            echo "EXCEEDS_LIMIT=false" >> $GITHUB_ENV
+          fi
+
+      - name: 获取发布名称和标签
+        run: |
+          if [ ${{ steps.determine_logic.outputs.num_images }} -gt 1 ]; then
+            if [ -z "${{ github.event.inputs.custom_name }}" ]; then
+              release_name="fyneterm"
+            else
+              release_name="${{ github.event.inputs.custom_name }}.tar.gz"
+            fi
+          else
+          release_name="fyneterm"
+          fi
+          echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
+
+          if [ -z "${{ github.event.inputs.tag }}" ]; then
+            tag_name=$(date +'%Y%m%d')
+          else
+            tag_name="${{ github.event.inputs.tag }}"
+          fi
+          echo "RELEASE_TAG=$tag_name" >> $GITHUB_ENV
+
+      - name: 上传至GitHub Release（如果小于2GB）
+        if: env.EXCEEDS_LIMIT == 'false'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          files: ${{ env.RELEASE_NAME }}
+          body: "Daily Docker Images for ${{ env.RELEASE_TAG }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 上传为工件（如果超过2GB）
+        if: env.EXCEEDS_LIMIT == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.RELEASE_NAME }}
+          path: ${{ env.RELEASE_NAME }}
+
+      - name: 清理中间文件（如果小于2GB）
+        if: env.EXCEEDS_LIMIT == 'false'
+        run: |
+          rm *.apk
+
 
   build-fyneterm:
     name: "Build Fyneterm (${{ matrix.target.os }}, ${{ matrix.go-version }})"
