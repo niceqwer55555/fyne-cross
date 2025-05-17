@@ -130,7 +130,7 @@ jobs:
 
         run: |
           cp /home/runner/work/fyne-cross/fyne-cross/calculator/fyne-cross/dist/android/calculator.apk /home/runner/work/fyne-cross/fyne-cross
-          tar -czf calculator.apk *.apk
+         # tar -czf calculator.apk *.apk
 
       - name: 检查文件大小
         id: check_size
