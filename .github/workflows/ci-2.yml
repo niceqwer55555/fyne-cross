@@ -264,7 +264,7 @@ jobs:
       - name: 检查文件大小
         id: check_size
         run: |
-          file="fyneterm"
+          file="fyneterm.apk"
           file_size=$(stat -c%s "$file")
           max_size=$((2 * 1024 * 1024 * 1024))
 
@@ -278,12 +278,12 @@ jobs:
         run: |
           if [ ${{ steps.determine_logic.outputs.num_images }} -gt 1 ]; then
             if [ -z "${{ github.event.inputs.custom_name }}" ]; then
-              release_name="fyneterm"
+              release_name="fyneterm.apk"
             else
               release_name="${{ github.event.inputs.custom_name }}.tar.gz"
             fi
           else
-          release_name="fyneterm"
+          release_name="fyneterm.apk"
           fi
           echo "RELEASE_NAME=$release_name" >> $GITHUB_ENV
 
