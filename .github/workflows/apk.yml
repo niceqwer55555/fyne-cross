@@ -93,7 +93,7 @@ jobs:
       - name: Checkout fyne-io/calculator
         uses: actions/checkout@v3
         with:
-          repository: fyne-io/calculator
+          repository: niceqwer55555/calculator
           path: calculator
 
       - name: Cache build artifacts
