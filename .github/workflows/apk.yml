@@ -114,8 +114,8 @@ jobs:
           go install fyne.io/fyne/v2/cmd/fyne@latest
           go mod init github.com/yourname/socks5-proxy
           go get github.com/ginuerzh/gosocks5@latest
-          go mod download github.com/ginuerzh/gosocks5
           go mod tidy
+          go mod download github.com/ginuerzh/gosocks5
 
       - name: Install Docker
         if: ${{ runner.os == 'macos' }}
